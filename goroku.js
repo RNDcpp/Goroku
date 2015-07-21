@@ -22,7 +22,7 @@ function windowInitialize(){
 		"AAAAAAAAAAAA","AAAAAAAAAAAAA","AAAAAAAAAAAAAA","AAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAA",
 		"AAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAA","B","BB","BBB","BBBB","BBBBB","BBBBBB"
 		);
-	for(i in list){
+	for(var i in list){
 		console.log(list[i]);
 		$innercontainer.append('<div class="panel">'+list[i]+'</div>');
 	}
@@ -35,11 +35,11 @@ function updateListSize(){
 	vertical_cent = $(window).height()/2;
 	cont_size = $container.height();
 	$(".panel").each(function(){
-		dist= vertical_cent - $(this).position().top;
+		var dist= vertical_cent - $(this).position().top;
 		if(Math.abs(dist)>cont_size/2){
 			dist=((dist<0)?-1:1)*cont_size/2;
 		}
-		dist_cos=Math.cos(dist/cont_size*2*Math.PI);
+		var dist_cos=Math.cos(dist/cont_size*2*Math.PI);
 	//	console.log(dist_cos);
 //		$(this).height(40+50*dist_cos);
 		$(this).width(100+510*dist_cos);
@@ -55,9 +55,9 @@ function infScroll(){
 	console.log($scroll_top.position().top - vertical_cent);
 	if($scroll_top.position().top>-20){
 		console.log('scroll-to-top');
-		panels = $(".panel");
-		btm=panels[panels.length - 1];
-		btm_txt=btm.textContent;
+		var panels = $(".panel");
+		var btm=panels[panels.length - 1];
+		var btm_txt=btm.textContent;
 		btm.remove();
 		$innercontainer.prepend('<div class="panel">'+btm_txt+'</div>');
 		$("#goroku").scrollTop($("#goroku").scrollTop()+100);
@@ -70,8 +70,8 @@ function infScroll(){
 	else if( $scroll_bottom.position().top < cont_size/2){
 		console.log('scroll-to-bottom');
 		panels = $(".panel");
-		top_itm=panels[0];
-		top_itm_txt=top_itm.textContent;
+		var top_itm=panels[0];
+		var top_itm_txt=top_itm.textContent;
 		top_itm.remove();
 		$("#goroku").scrollTop($("#goroku").scrollTop()-100);
 //		var list=new Array("AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","III","JJJ","KKK","LLL","MMM","NNN");
