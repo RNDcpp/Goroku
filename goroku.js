@@ -55,11 +55,9 @@ function infScroll(){
 	console.log($scroll_top.position().top - vertical_cent);
 	if($scroll_top.position().top>-20){
 		console.log('scroll-to-top');
-		var panels = $(".panel");
-		var btm=panels[panels.length - 1];
-		var btm_txt=btm.textContent;
-		btm.remove();
-		$innercontainer.prepend('<div class="panel">'+btm_txt+'</div>');
+		var $btm=$(".panel:last");
+		$innercontainer.prepend($btm.clone(true));
+		$btm.remove();
 		$("#goroku").scrollTop($("#goroku").scrollTop()+100);
 /*		var list=new Array("AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","III","JJJ","KKK","LLL","MMM","NNN");
 		for(i in list){
@@ -69,17 +67,15 @@ function infScroll(){
 */	}
 	else if( $scroll_bottom.position().top < cont_size/2){
 		console.log('scroll-to-bottom');
-		panels = $(".panel");
-		var top_itm=panels[0];
-		var top_itm_txt=top_itm.textContent;
-		top_itm.remove();
+		var $top_itm=$(".panel:first");
+		$innercontainer.append($top_itm.clone(true));
+		$top_itm.remove();
 		$("#goroku").scrollTop($("#goroku").scrollTop()-100);
 //		var list=new Array("AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","III","JJJ","KKK","LLL","MMM","NNN");
 //		for(i in list.reverse()){
 //			console.log(list[i]);
 //			$innercontainer.append('<div class="panel">'+list[i]+'</div>');
 //		}
-		$innercontainer.append('<div class="panel">'+top_itm_txt+'</div>');
 	}
 	$goroku_scroll_top = $('#goroku').scrollTop();
 }
