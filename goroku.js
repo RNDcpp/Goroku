@@ -1,7 +1,7 @@
 var $container
 var $innercontainer
-var $vertical_cent
-var $cont_size
+var vertical_cent
+var cont_size
 var $scroll_top
 var $scroll_bottom
 var $goroku_scroll_top
@@ -32,42 +32,42 @@ function containerCentering(){
 //	console.log('centeringContainer'+$container);
 }
 function updateListSize(){
-	$vertical_cent = $(window).height()/2
-	$cont_size = $container.height()
+	vertical_cent = $(window).height()/2
+	cont_size = $container.height()
 	$(".panel").each(function(){
-		dist= $vertical_cent - $(this).position().top;
-		if(Math.abs(dist)>$cont_size/2){
-			dist=((dist<0)?-1:1)*$cont_size/2;
+		dist= vertical_cent - $(this).position().top;
+		if(Math.abs(dist)>cont_size/2){
+			dist=((dist<0)?-1:1)*cont_size/2;
 		}
-		dist_cos=Math.cos(dist/$cont_size*2*Math.PI);
+		dist_cos=Math.cos(dist/cont_size*2*Math.PI);
 	//	console.log(dist_cos);
 //		$(this).height(40+50*dist_cos);
 		$(this).width(100+510*dist_cos);
 		$(this).css(
 			{
 				opacity:(dist_cos*3-2.2)
-			});				
+			});
 	})
 }
 function infScroll(){
-	$vertical_cent = $(window).height()/2
-	$cont_size = $container.height()
-	console.log($scroll_top.position().top-$vertical_cent);
+	vertical_cent = $(window).height()/2
+	cont_size = $container.height()
+	console.log($scroll_top.position().top - vertical_cent);
 	if($scroll_top.position().top>-20){
 		console.log('scroll-to-top');
 		panels = $(".panel")
 		btm=panels[panels.length - 1]
 		btm_txt=btm.textContent
-		btm.remove()		
+		btm.remove()
 		$innercontainer.prepend('<div class="panel">'+btm_txt+'</div>')
 		$("#goroku").scrollTop($("#goroku").scrollTop()+100);
 /*		var list=new Array("AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","III","JJJ","KKK","LLL","MMM","NNN");
 		for(i in list){
 			console.log(list[i]);
 			$innercontainer.append('<div class="panel">'+list[i]+'</div>');
-		}		
+		}
 */	}
-	else if( $scroll_bottom.position().top<$cont_size/2){
+	else if( $scroll_bottom.position().top < cont_size/2){
 		console.log('scroll-to-bottom');
 		panels = $(".panel");
 		top_itm=panels[0];
