@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'foreman', '~> 0.84.0'
 gem 'dotenv-rails', '~> 2.2.1'
+gem 'counter_culture', '~> 1.9.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
