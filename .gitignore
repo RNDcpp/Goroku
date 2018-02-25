@@ -6,6 +6,7 @@
 .babelrc
 .postcssrc.yml
 .ruby-version
+.env
 # Ignore bundler config.
 /.bundle
 vendor/bundle
