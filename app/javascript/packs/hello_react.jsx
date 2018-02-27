@@ -5,9 +5,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import Quote from '../components/quote'
 
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+
+import Quotes from '../containers/quotes_container'
+import reducer from '../reducers/quotes_reducer'
+
+//TODO const history = createHistory()
+//TODO const middleware = routerMiddleware(history)
+
+const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 const Hello = props => (
-  <div>Hello {props.name}!</div>
+  <div>
+  </div>
 )
 
 Hello.defaultProps = {
@@ -20,7 +32,9 @@ Hello.propTypes = {
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
+    <Provider store={store}>
+      <Quotes tag={1} />
+    </Provider>,
     document.body.appendChild(document.createElement('div')),
   )
 })
