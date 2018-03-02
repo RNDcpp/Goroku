@@ -15,12 +15,13 @@ import {
 
 const getQuote_lists = (state, props) => {
   console.log(props.tag);
-  if(state.quotes_lists === undefined 
-    || state.quotes_lists.getIn([props.tag]) === undefined 
-    || state.quotes_lists.getIn([props.tag,"quotes"]) === undefined){
+  if(state.quotes.quotes_lists === undefined
+    || state.quotes.quotes_lists.getIn([props.tag]) === undefined 
+    || state.quotes.quotes_lists.getIn([props.tag,"quotes"]) === undefined){
     return [];
   }else{
-    return state.quotes_lists.getIn([props.tag,"quotes"]);
+    console.log("load");
+    return state.quotes.quotes_lists.getIn([props.tag,"quotes"]);
   }
 }
 const mapStateToProps = (state, props) => {

@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   delete 'quote/:id', to: 'quote#delete'
 
+  get 'view/*path', to: 'home#index'
+
   root 'home#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

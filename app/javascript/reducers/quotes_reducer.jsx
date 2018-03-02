@@ -9,21 +9,22 @@ const initialQuotesList = {
 }
 
 const initialState = {
-  hoge: "hoge",
-  quotes_lists : Immutable.Map(),
+    hoge: "hoge",
+    quotes_lists : Immutable.Map(),
 }
 
 const expandQuotesList = (state, tag, list) => {
-  console.log(list);
-  console.log(state.quotes_lists.getIn([tag, "quotes"]));
+  //console.log(list);
+  //console.log(state.quotes_lists.getIn([tag, "quotes"]));
   state.quotes_lists = state.quotes_lists.setIn([tag, "quotes"], Immutable.List([ ...state.quotes_lists.getIn([tag, "quotes"]), ...list]))
                                          .setIn([tag, "loading"], false);
   return state
 }
 
 const reducer = (state = initialState, action) => {
-  console.log(action.type);
-  console.log(state.quotes_lists)
+  //console.log(action.type);
+  //console.log(state.quotes_lists)
+  const default_state=state;
   switch (action.type) {
     case 'FETCH_QUOTES': 
     {
@@ -56,9 +57,8 @@ const reducer = (state = initialState, action) => {
       return Object.assign({},state);
     }
     default: {
-      return state;
+      return default_state;
     }
   }
 }
-
-export default reducer
+export default reducer;

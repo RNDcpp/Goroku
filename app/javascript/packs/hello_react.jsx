@@ -8,18 +8,23 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 import Quote from '../components/quote'
 
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
+import { reducer as formReducer } from 'redux-form'
 
 import Quotes from '../containers/quotes_container'
 import QuoteCreateForm from '../containers/form/quote_create_form_container'
-import reducer from '../reducers/quotes_reducer'
+import quoteReducer  from '../reducers/quotes_reducer'
 
 //const history = createHistory();
 //const middleware = routerMiddleware(history);
 
+const rootReducer = combineReducers({
+  quotes: quoteReducer,
+  form: formReducer
+});
 
-const store = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const store = createStore(rootReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const Hello = props => (
   <div>
   </div>
@@ -38,9 +43,9 @@ var Routes = (
   <Router>
     <div>
       <Link to="/">Quote</Link>
-      <Link to="/quote-create-form">Form</Link>
+      <Link to="/view/quote-create-form">Form</Link>
       <Route exact path="/" render={({match})=>{return(<Quotes tag={1} match={match} />);}} />
-      <Route path = "/quote-create-form" component={QuoteCreateForm} />
+      <Route path = "/view/quote-create-form" component={QuoteCreateForm} />
     </div>
   </Router>
 );
