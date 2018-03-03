@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import request from 'superagent'
+
 let CreateForm = props => {
   const { handleSubmit } = props;
   return (
@@ -15,8 +17,17 @@ let CreateForm = props => {
 CreateForm = reduxForm({form: 'createQuote'})(CreateForm);
 export default class QuoteCreateForm extends React.Component {
   submit = values => {
-    //TODO 
-    console.log(values);
+    request.post('/quote')
+           .send({text: values.text})
+           .set('Content-Type', 'application/json')
+           .end(function(err, res) {
+             if (err) {
+               //TODO
+               console.log("Oops");
+             } else {
+               console.log("OK");
+             }
+           });
   }
   render(){
     return (

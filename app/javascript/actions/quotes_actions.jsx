@@ -3,7 +3,7 @@ import request from 'superagent'
 export function fetchQuotes() {
   return (dispatch, props) => {
     dispatch(fetchQuotesRequest(props.tag));
-    request.get('/quote')
+    request.get('/quote') 
            .end(function(err, res) {
              if (err) {
                 dispatch(fetchQuotesError(props.tag));
