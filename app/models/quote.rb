@@ -15,7 +15,7 @@ class Quote < ApplicationRecord
   end
   def update_tag_texts(tag_texts)
     tag_texts=tag_texts.to_set
-    default_tag_texts=tags.map(&:text).to_set
+    default_tag_texts=tags.pluck(:text).to_set
     tag_texts_new=tag_texts-default_tag_texts
     tag_texts_deleted=default_tag_texts-tag_texts
     append_tag_texts(tag_texts_new)
