@@ -6,7 +6,13 @@ class QuoteController < ApplicationController
   def index
     #ActiveModel::CollectionSerializer.new(@quotes, serializer: QuoteSerializer, include: {tags: [:tags] }).as_json
     @quotes = @tags ? Quote.tag_search_and(@tags,params[:page]) : Quote.all.page(params[:page])
-    render json: @quotes, include: {tags: [:id, :text]}
+    render json: {quotes: ActiveModel::Serializer::CollectionSerializer.new(
+                          @quotes,
+                          eachSerializer: QuoteSerializer,
+                          include: {tags: [:id, :text]}),
+                  next: @quotes.next_page,
+                  last_page: @quotes.last_page?
+                  }
   end
 
   def show

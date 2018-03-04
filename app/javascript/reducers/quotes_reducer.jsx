@@ -5,19 +5,22 @@ const initialQuotesList = {
   quotes: Immutable.List(),
   tag: 0,
   loading: false,
-  next: null
+  next: null,
+  last_page: false,
 }
 
 const initialState = {
-    hoge: "hoge",
     quotes_lists : Immutable.Map(),
 }
 
-const expandQuotesList = (state, tag, list) => {
+const expandQuotesList = (state, tag, list, next, last_page) => {
   //console.log(list);
-  //console.log(state.quotes_lists.getIn([tag, "quotes"]));
+  console.log(state.quotes_lists.getIn([tag, "last_page"]));
   state.quotes_lists = state.quotes_lists.setIn([tag, "quotes"], Immutable.List([ ...state.quotes_lists.getIn([tag, "quotes"]), ...list]))
-                                         .setIn([tag, "loading"], false);
+  state.quotes_lists = state.quotes_lists.setIn([tag, "loading"], false)
+  state.quotes_lists = state.quotes_lists.setIn([tag, "next"], next)
+  state.quotes_lists = state.quotes_lists.setIn([tag, "last_page"], last_page)
+  console.log(state.quotes_lists.getIn([tag, "last_page"]));
   return state
 }
 
@@ -47,7 +50,7 @@ const reducer = (state = initialState, action) => {
     {
       console.log(action.quotes_list)
       console.log(action.tag)
-      state = expandQuotesList(state, action.tag, action.quotes_list);//TODO .setIn([action.tag,'next'], action.next)
+      state = expandQuotesList(state, action.tag, action.quotes_list,action.next,action.last_page)
       return Object.assign({},state);
     }
     case 'FETCH_QUOTES_FAILED': 

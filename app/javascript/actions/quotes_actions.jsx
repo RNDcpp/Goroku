@@ -50,13 +50,17 @@ export function fetchQuotesSuccess(tag,value) {
   return {
     type: 'FETCH_QUOTES_SUCCESS',
     tag: tag,
-    quotes_list: value,
+    quotes_list: value.quotes,
+    next: value.next,
+    last_page: value.last_page,
   }
 }
 export function expandQuotesSuccess(tag,value) {
   return {
     type: 'EXPAND_QUOTES_SUCCESS',
     tag: tag,
-    quotes_list: value,
+    quotes_list: value.quotes,
+    next: value.next,
+    last_page: value.last_page,
   }
 }

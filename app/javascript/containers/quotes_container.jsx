@@ -13,21 +13,20 @@ import {
   expandQuotes,
 } from './../actions/quotes_actions'
 
-const getQuote_lists = (state, props) => {
-  console.log(props.tag);
-  if(state.quotes.quotes_lists === undefined
-    || state.quotes.quotes_lists.getIn([props.tag]) === undefined 
-    || state.quotes.quotes_lists.getIn([props.tag,"quotes"]) === undefined){
-    return [];
-  }else{
-    console.log("load");
-    return state.quotes.quotes_lists.getIn([props.tag,"quotes"]);
-  }
-}
 const mapStateToProps = (state, props) => {
-  const quotes = getQuote_lists(state,props);
+  let quotes=[];
+  let last_page=false;
+  let next=null;
+  console.log(state.quotes.quotes_lists.getIn([props.tag]));
+  if(!(state.quotes.quotes_lists === undefined) && !(state.quotes.quotes_lists.getIn([props.tag]) === undefined) ){
+    console.log("getgetget");
+    quotes = state.quotes.quotes_lists.getIn([props.tag,"quotes"]);
+    last_page = state.quotes.quotes_lists.getIn([props.tag,"last_page"]);
+    next = state.quotes.quotes_lists.getIn([props.tag,"next"]);
+   }
   return {
     quotes_list: quotes,
+    last_page: last_page
   };
 };
 
@@ -36,13 +35,20 @@ const quotesList = (lists) => {
 }
 
 class Quotes extends React.Component {
+  static propTypes = {
+    quotes_list: PropTypes.array,
+    last_page: PropTypes.bool,
+    next: PropTypes.string,
+  };
   // TODO ここいいかんじになおす
   componentDidMount() {
     console.log("SAFEAF");
     const { dispatch } = this.props;
     const fetch = fetchQuotes();
     console.log(dispatch);
-    fetch(dispatch,this.props);
+    if(!this.props.last_page){
+      fetch(dispatch,this.props);
+    }
   }
   render() {
     console.log("render")

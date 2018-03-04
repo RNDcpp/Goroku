@@ -46,7 +46,7 @@ var Routes = (
     <div>
       <Link to="/">Quote</Link>
       <Link to="/view/quote-create-form">Form</Link>
-      <Route exact path="/" render={({match})=>{return(<Quotes tag={1} match={match} />);}} />
+      <Route exact path="/" render={({match})=>{return(<Quotes tag={1} last_page={false} match={match} />);}} />
       <Route path = "/view/quote-create-form" component={QuoteCreateForm} />
       <Route path = "/view/quote-edit-form/:id" render={({match,location})=>{
         const{id}=match.params;
