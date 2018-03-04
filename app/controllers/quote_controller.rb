@@ -2,9 +2,10 @@ class QuoteController < ApplicationController
   before_action :check_text, only: [:create]
   before_action :check_id, only: [:show, :update, :delete]
   before_action :get_quote, only: [:show, :update, :delete]
+  before_action :parse_tags, only: [:index]
   def index
     #ActiveModel::CollectionSerializer.new(@quotes, serializer: QuoteSerializer, include: {tags: [:tags] }).as_json
-    @quotes=Quote.all.page(params[:page])
+    @quotes = @tags ? Quote.tag_search_and(@tags,params[:page]) : Quote.all.page(params[:page])
     render json: @quotes, include: {tags: [:id, :text]}
   end
 
@@ -48,5 +49,8 @@ class QuoteController < ApplicationController
   end
   def check_tags
     params[:tags] && params[:tags].is_a?(Array)
+  end
+  def parse_tags
+    @tags = params[:tags] ? params[:tags].split(" ") : nil
   end
 end

@@ -21,4 +21,7 @@ class Quote < ApplicationRecord
     append_tag_texts(tag_texts_new)
     delete_tag_texts(tag_texts_deleted)
   end
+  def self.tag_search_and(tag_texts,page)
+    Quote.joins(:tags).where(tags:{text:tag_texts}).group(:id).having('count(*) = ?',tag_texts.length).page(page)
+  end
 end
