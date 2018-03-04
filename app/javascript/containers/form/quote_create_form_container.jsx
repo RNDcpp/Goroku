@@ -9,6 +9,8 @@ let CreateForm = props => {
     <div>
       <label htmlFor = "text">Text</label>
       <Field name="text" component="input" type="text" />
+      <label htmlFor = "tags">Tags</label>
+      <Field name="tags" component="input" type="text" />
       <button type="submit">Submit</button>
     </div>
   </form>
@@ -17,8 +19,9 @@ let CreateForm = props => {
 CreateForm = reduxForm({form: 'createQuote'})(CreateForm);
 export default class QuoteCreateForm extends React.Component {
   submit = values => {
+    const tags=values.tags.split(" ")
     request.post('/quote')
-           .send({text: values.text})
+           .send({text: values.text, tags: tags})
            .set('Content-Type', 'application/json')
            .end(function(err, res) {
              if (err) {
