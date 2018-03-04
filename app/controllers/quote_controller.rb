@@ -1,7 +1,7 @@
 class QuoteController < ApplicationController
-  before_action :check_text, only: [:create, :update]
-  before_action :check_id, only: [:show, :delete]
-  before_action :get_quote, only: [:show, :delete]
+  before_action :check_text, only: [:create]
+  before_action :check_id, only: [:show, :update, :delete]
+  before_action :get_quote, only: [:show, :update, :delete]
   def index
     #ActiveModel::CollectionSerializer.new(@quotes, serializer: QuoteSerializer, include: {tags: [:tags] }).as_json
     @quotes=Quote.all.page(params[:page])
@@ -16,19 +16,20 @@ class QuoteController < ApplicationController
     quote=Quote.new
     quote.text=params[:text]
     if quote.save
-      render json: quote, status: :created
+      quote.append_tag_texts(params[:tags]) if check_tags
+      render json: @quote, status: :created
     else
-      render json: quote, status: :bad_request
+      render json: @quote, status: :bad_request
     end
   end
 
   def update
-    quote=Quote.new
-    quote.text=params[:text]
-    if quote.save
-      render json: quote, status: :ok
+    @quote.text=params[:text] if check_text
+    @quote.update_tag_texts(params[:tags]) if check_tags
+    if @quote.save
+      render json: @quote, status: :ok
     else
-      render json: quote, status: :bad_request
+      render json: @quote, status: :bad_request
     end
   end
 
@@ -36,7 +37,7 @@ class QuoteController < ApplicationController
     @quote.destroy
   end
   private
-  def get_quote()
+  def get_quote
     @quote=Quote.find(params[:id])
   end
   def check_id
@@ -44,5 +45,8 @@ class QuoteController < ApplicationController
   end
   def check_text
     params.require(:text)
+  end
+  def check_tags
+    params[:tags] && params[:tags].is_a?(Array)
   end
 end
