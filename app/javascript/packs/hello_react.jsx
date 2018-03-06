@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 import Quote from '../components/quote'
+import Top from '../components/top'
 
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
@@ -46,11 +47,16 @@ var Routes = (
     <div>
       <Link to="/">Quote</Link>
       <Link to="/view/quote-create-form">Form</Link>
-      <Route exact path="/" render={({match})=>{return(<Quotes tag={1} last_page={false} match={match} />);}} />
+      <Route exect path="/" component={Top} />
+      <Route path="/view/quotes" render={({match,location})=>{
+        const query = parse(location.search);
+        const {tags} = query;
+        return(<Quotes tag={tags} last_page={false} match={match} />);
+        }} />
       <Route path = "/view/quote-create-form" component={QuoteCreateForm} />
       <Route path = "/view/quote-edit-form/:id" render={({match,location})=>{
-        const{id}=match.params;
-        const query=parse(location.search);
+        const{id} = match.params;
+        const query = parse(location.search);
         const{text,tags} = query;
         console.log(location);
         return (<QuoteEditForm id={id} text={text} tags={tags}/>);}} />

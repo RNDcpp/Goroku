@@ -3,14 +3,15 @@ import request from 'superagent'
 export function fetchQuotes() {
   return (dispatch, props) => {
     dispatch(fetchQuotesRequest(props.tag));
-    request.get('/quote') 
-           .end(function(err, res) {
-             if (err) {
-                dispatch(fetchQuotesError(props.tag));
-             } else {
-                dispatch(fetchQuotesSuccess(props.tag,res.body));
-             }
-           });
+    const url = (props.tag === undefined)?'/quote':`/quote?tags=${props.tag}`
+    request.get(url)
+      .end(function (err, res) {
+        if (err) {
+          dispatch(fetchQuotesError(props.tag));
+        } else {
+          dispatch(fetchQuotesSuccess(props.tag, res.body));
+        }
+      });
   }
 }
 
