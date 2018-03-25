@@ -45,8 +45,7 @@ Hello.propTypes = {
 var Routes = (
   <Router>
     <div>
-      <Link to="/">Quote</Link>
-      <Link to="/view/quote-create-form">Form</Link>
+      
       <Route exect path="/" component={Top} />
       <Route path="/view/quotes" render={({match,location})=>{
         const query = parse(location.search);
