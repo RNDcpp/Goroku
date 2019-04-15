@@ -1,0 +1,35 @@
+{
+  "name": "goroku",
+  "version": "1.0.0",
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "app/javascript/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "webpack": "webpack --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RNDcpp/Goroku.git"
+  },
+  "author": "RNDcpp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RNDcpp/Goroku/issues"
+  },
+  "homepage": "https://github.com/RNDcpp/Goroku#readme",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0"
+  }
+}
