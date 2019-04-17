@@ -2,14 +2,54 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore} from 'redux'
 import { Provider, connect } from 'react-redux'
+import { request } from 'https';
+//var request = require('request');
+
 
 class AppComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+        quotes: [],
+    };
+  }
+  componentDidMount() {
+    console.log("rewuest");
+    const req = request("/quote", res => {
+      res.on("data", chunk => {
+        let data = JSON.parse(chunk);
+        this.setState({"quotes":data.quotes})
+        console.log(`BODY: ${data.quotes}`);
+      });
+      res.on("end", () => {
+        console.log("No more data in response.");
+      });
+    });
+
+    req.on("error", e => {
+      console.error(`problem with request: ${e.message}`);
+    });
+
+    req.end();
+  }
   render() {
-    return <div>
-    <span>{this.props.fuga}</span>
-    {console.log(this)}
-    <button onClick = {(e)=>{this.props.handleClick()}}>増加</button>
-    </div>
+    return (
+      <div>
+        <span>{this.props.fuga}</span>
+        {console.log(this.state)}
+        {this.state.quotes.map((e)=>{
+          return <div>{e.id}:{e.text}</div>}
+          )}
+        {console.log(this)}_
+        <button
+          onClick={e => {
+            this.props.handleClick();
+          }}
+        >
+          増加
+        </button>
+      </div>
+    );
   }
 }
 
@@ -45,7 +85,34 @@ const MapDispatchToProps = (dispatch)=>{
   console.log("MapDispatchToProps");
   console.log(dispatch);
   return {
-    handleClick: ()=>{
+    handleClick: () => {
+      let postData = {
+         "text": "今日もいい天気",
+      };
+
+      let postDataStr = JSON.stringify(postData);
+      const options = {
+        path: "/quote",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Length": postDataStr.length
+        }
+      };
+
+      const req = request(options, res => {
+        res.on("data", chunk => {
+          console.log(`BODY: ${chunk}`);
+        });
+        res.on("end", () => {
+          console.log("No more data in response.");
+        });
+      });
+      req.on("error", e => {
+        console.error(`problem with request: ${e.message}`);
+      });
+      req.write(postDataStr);
+      req.end();
       console.log("handleClick call");
       dispatch(increment());
     }
